@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemySight : MonoBehaviour
 {
-	public float fieldOfViewAngle = 60f;           // Number of degrees, centred on forward, for the enemy see.
+	public float fieldOfViewAngle = 80f;           // Number of degrees, centred on forward, for the enemy see.
 	public bool playerSighted;                      // Whether or not the player is currently sighted.
 	public Sighting sighting;
 
