@@ -4,7 +4,8 @@ using System.Collections;
 public class Sighting : MonoBehaviour {
 
 	AudioSource audio;
-	public AudioClip MetalGear;
+	public AudioClip Nope;
+	public AudioClip Violin;
 
 	// Use this for initialization
 	void Start () {
@@ -13,9 +14,15 @@ public class Sighting : MonoBehaviour {
 
 	public void playerSighted () {
 		audio.Stop ();
-		audio.clip = MetalGear;
-		audio.PlayOneShot (MetalGear, 0.5f);
-		Debug.Log ("nope");
+		audio.clip = Nope;
+		audio.PlayOneShot (Nope, 0.5f);
+		StartCoroutine(Wait(audio.clip.length));
+	}
+
+	IEnumerator Wait(float f){
+		yield return new WaitForSeconds (f);
+		audio.clip = Violin;
+		audio.PlayOneShot (Violin, 1f);
 	}
 	
 	// Update is called once per frame
