@@ -20,8 +20,6 @@ public class EnemySight : MonoBehaviour
 		col = GetComponent<SphereCollider>();
 		anim = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag("Player");
-		playerAnim = player.GetComponent<Animator>();
-		controller = GameObject.FindGameObjectWithTag ("GameController");
 	}
 
 	void OnTriggerStay (Collider other)

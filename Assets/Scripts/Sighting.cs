@@ -16,7 +16,8 @@ public class Sighting : MonoBehaviour {
 		audio.Stop ();
 		audio.clip = Nope;
 		audio.PlayOneShot (Nope, 0.5f);
-		StartCoroutine(Wait(audio.clip.length));
+        Time.timeScale = 0;
+        StartCoroutine(Wait(audio.clip.length));
 	}
 
 	IEnumerator Wait(float f){
