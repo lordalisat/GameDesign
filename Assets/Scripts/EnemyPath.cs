@@ -6,9 +6,9 @@ public class EnemyPath : MonoBehaviour {
 	public GameObject[] wayPoints;
 	public int num = 0;
 
-	public float minDist;
+	public float minDist = 1;
 	public float speed = 1;
-	public float rSpeed = 1;
+	public float rSpeed = 2;
 
 	public bool rand = false;
 	public bool go = true;
@@ -26,7 +26,6 @@ public class EnemyPath : MonoBehaviour {
 			if (dist > minDist) {
 				Move ();
 			} else {
-				go = false;
 				if (!rand) {
 					if (num + 1 == wayPoints.Length) {
 						num = 0;
@@ -37,23 +36,13 @@ public class EnemyPath : MonoBehaviour {
 					RandomWayPoint ();
 				}
 			}
-		} else {
-			Rotate ();
 		}
 	}
 
 	public void Move(){
-
-		gameObject.transform.LookAt (wayPoints [num].transform.position);
-		gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
-	}
-
-	void Rotate(){
 		Quaternion direction = Quaternion.LookRotation (wayPoints [num].transform.position - gameObject.transform.position);
 		gameObject.transform.rotation = Quaternion.RotateTowards (gameObject.transform.rotation, direction, Time.deltaTime + rSpeed);
-		if (gameObject.transform.rotation == direction) {
-			go = true;
-		}
+		gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
 	}
 
 	void RandomWayPoint(){
