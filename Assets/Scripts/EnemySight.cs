@@ -8,7 +8,6 @@ public class EnemySight : MonoBehaviour
 	public Sighting sighting;
 
 	private SphereCollider col;                     // Reference to the sphere collider trigger component.
-	private Animator anim;                          // Reference to the Animator.
 	private GameObject player;                      // Reference to the player.
 	private Animator playerAnim;                    // Reference to the player's animator component.
 	private GameObject controller;
@@ -18,7 +17,6 @@ public class EnemySight : MonoBehaviour
 	{
 		// Setting up the references.
 		col = GetComponent<SphereCollider>();
-		anim = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
