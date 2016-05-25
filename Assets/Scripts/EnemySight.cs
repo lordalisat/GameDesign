@@ -9,8 +9,6 @@ public class EnemySight : MonoBehaviour
 
 	private SphereCollider col;                     // Reference to the sphere collider trigger component.
 	private GameObject player;                      // Reference to the player.
-	private Animator playerAnim;                    // Reference to the player's animator component.
-	private GameObject controller;
 	private bool caught = false;
 
 	void Awake ()
