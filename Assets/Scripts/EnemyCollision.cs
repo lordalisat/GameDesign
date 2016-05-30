@@ -9,18 +9,19 @@ public class EnemyCollision : MonoBehaviour
 	public Sighting sighting;
 
 
-	void Awake ()
+	void Awake()
 	{
 		// Setting up the references.
-		player = GameObject.FindGameObjectWithTag ("Player");
+		player = GameObject.FindGameObjectWithTag("Player");
+
 	}
 	
 	// Update is called once per frame
-	void OnTriggerEnter (Collider other)
+	void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject == player) {
-			sighting.playerSighted ();
-			gameObject.GetComponentInParent<EnemyPath> ().SetSeen ();
+			sighting.playerSighted();
+			gameObject.GetComponentInParent<EnemyPath>().SetSeen();
 		}
 	}
 }

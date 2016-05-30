@@ -3,35 +3,34 @@ using System.Collections;
 
 public class Sighting : MonoBehaviour
 {
-
-	AudioSource audio;
+	private AudioSource player;
 	public AudioClip Nope;
 	public AudioClip Violin;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
-		audio = GetComponent<AudioSource> ();
+		player = GetComponent<AudioSource>();
 	}
 
-	public void playerSighted ()
+	public void playerSighted()
 	{
-		audio.Stop ();
-		audio.clip = Nope;
-		audio.PlayOneShot (Nope, 0.5f);
+		player.Stop();
+		player.clip = Nope;
+		player.PlayOneShot(Nope, 0.5f);
 		Time.timeScale = 0;
-		StartCoroutine (Wait (audio.clip.length));
+		StartCoroutine(Wait(player.clip.length));
 	}
 
-	IEnumerator Wait (float f)
+	IEnumerator Wait(float f)
 	{
-		yield return new WaitForSeconds (f);
-		audio.clip = Violin;
-		audio.PlayOneShot (Violin, 1f);
+		yield return new WaitForSeconds(f);
+		player.clip = Violin;
+		player.PlayOneShot(Violin, 1f);
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
 			
 	}
