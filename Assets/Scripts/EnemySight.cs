@@ -39,6 +39,7 @@ public class EnemySight : MonoBehaviour
 							caught = true;
 							// ... the player is in sight.
 							sighting.playerSighted ();
+							gameObject.GetComponent<EnemyPath>().SetSeen ();
 						}
 					}
 				}

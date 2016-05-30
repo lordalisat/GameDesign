@@ -6,6 +6,8 @@ public class EnemyPath : MonoBehaviour {
 	public GameObject[] wayPoints;
 	public int num = 0;
 
+	public GameObject player;
+
 	public float minDist = 1;
 	public float speed = 1;
 	public float rSpeed = 2;
@@ -15,9 +17,9 @@ public class EnemyPath : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		float dist = Vector3.Distance (gameObject.transform.position, wayPoints [num].transform.position);
@@ -36,6 +38,8 @@ public class EnemyPath : MonoBehaviour {
 					RandomWayPoint ();
 				}
 			}
+		} else {
+			WalkToPlayer ();
 		}
 	}
 
@@ -43,6 +47,15 @@ public class EnemyPath : MonoBehaviour {
 		Quaternion direction = Quaternion.LookRotation (wayPoints [num].transform.position - gameObject.transform.position);
 		gameObject.transform.rotation = Quaternion.RotateTowards (gameObject.transform.rotation, direction, Time.deltaTime + rSpeed);
 		gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+	}
+
+	void WalkToPlayer(){
+		Quaternion direction = Quaternion.LookRotation (player.transform.position - gameObject.transform.position);
+		gameObject.transform.rotation = Quaternion.RotateTowards (gameObject.transform.rotation, direction, Time.deltaTime + rSpeed);
+		float dist = Vector3.Distance (gameObject.transform.position, player.transform.position);
+		if (dist > minDist & gameObject.transform.rotation == direction) {
+			gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+		}
 	}
 
 	void RandomWayPoint(){
@@ -55,5 +68,9 @@ public class EnemyPath : MonoBehaviour {
 				RandomWayPoint ();
 			}
 		}
+	}
+
+	public void SetSeen(){
+		go = false;
 	}
 }
