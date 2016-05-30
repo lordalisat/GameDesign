@@ -3,19 +3,23 @@ using System.Collections;
 
 public class EnemySight : MonoBehaviour
 {
-	public float fieldOfViewAngle = 80f;           // Number of degrees, centred on forward, for the enemy see.
-	public bool playerSighted;                      // Whether or not the player is currently sighted.
+	public float fieldOfViewAngle = 80f;
+	// Number of degrees, centred on forward, for the enemy see.
+	public bool playerSighted;
+	// Whether or not the player is currently sighted.
 	public Sighting sighting;
 
-	private SphereCollider col;                     // Reference to the sphere collider trigger component.
-	private GameObject player;                      // Reference to the player.
+	private SphereCollider col;
+	// Reference to the sphere collider trigger component.
+	private GameObject player;
+	// Reference to the player.
 	private bool caught = false;
 
 	void Awake ()
 	{
 		// Setting up the references.
-		col = GetComponent<SphereCollider>();
-		player = GameObject.FindGameObjectWithTag("Player");
+		col = GetComponent<SphereCollider> ();
+		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 
 	void OnTriggerStay (Collider other)
@@ -39,7 +43,7 @@ public class EnemySight : MonoBehaviour
 							caught = true;
 							// ... the player is in sight.
 							sighting.playerSighted ();
-							gameObject.GetComponent<EnemyPath>().SetSeen ();
+							gameObject.GetComponent<EnemyPath> ().SetSeen ();
 						}
 					}
 				}
