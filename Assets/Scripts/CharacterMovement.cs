@@ -6,8 +6,8 @@ public class CharacterMovement : MonoBehaviour
 	public static int movespeed = 1;
 	public Vector3 userDirection = Vector3.right;
 
-	public void Update ()
+	public void Update()
 	{
-		transform.Translate (userDirection * movespeed * Time.deltaTime); 
+		transform.Translate(userDirection * movespeed * Time.deltaTime); 
 	}
 }

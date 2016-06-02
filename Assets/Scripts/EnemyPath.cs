@@ -7,7 +7,7 @@ public class EnemyPath : MonoBehaviour
 	public GameObject[] wayPoints;
 	public int num = 0;
 
-	public GameObject player;
+	private GameObject player;
 
 	public float minDist = 1;
 	public float speed = 1;
@@ -17,19 +17,19 @@ public class EnemyPath : MonoBehaviour
 	public bool go = true;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
-		player = GameObject.FindGameObjectWithTag ("Player");
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
 	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
-		float dist = Vector3.Distance (gameObject.transform.position, wayPoints [num].transform.position);
+		float dist = Vector3.Distance(gameObject.transform.position, wayPoints[num].transform.position);
 
 		if (go) {
 			if (dist > minDist) {
-				Move ();
+				Move();
 			} else {
 				if (!rand) {
 					if (num + 1 == wayPoints.Length) {
@@ -38,45 +38,53 @@ public class EnemyPath : MonoBehaviour
 						num++;
 					}
 				} else {
-					RandomWayPoint ();
+					RandomWayPoint();
 				}
 			}
 		} else {
-			WalkToPlayer ();
+			WalkToPlayer();
 		}
 	}
 
-	public void Move ()
+	public void Move()
 	{
-		Quaternion direction = Quaternion.LookRotation (wayPoints [num].transform.position - gameObject.transform.position);
-		gameObject.transform.rotation = Quaternion.RotateTowards (gameObject.transform.rotation, direction, Time.deltaTime + rSpeed);
-		gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
-	}
-
-	void WalkToPlayer ()
-	{
-		Quaternion direction = Quaternion.LookRotation (player.transform.position - gameObject.transform.position);
-		gameObject.transform.rotation = Quaternion.RotateTowards (gameObject.transform.rotation, direction, Time.deltaTime + rSpeed);
-		float dist = Vector3.Distance (gameObject.transform.position, player.transform.position);
-		if (dist > minDist & gameObject.transform.rotation == direction) {
+		Quaternion direction = Quaternion.LookRotation(wayPoints[num].transform.position - gameObject.transform.position);
+		gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, direction, rSpeed * Time.deltaTime);
+		if (Vector3.Angle(wayPoints[num].transform.position - gameObject.transform.position, gameObject.transform.forward) < 40) {
 			gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+		} else if (Vector3.Angle(wayPoints[num].transform.position - gameObject.transform.position, gameObject.transform.forward) < 130) {
+			gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime / 30;
+		} else {
+			gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, direction, rSpeed * Time.deltaTime);
 		}
 	}
 
-	void RandomWayPoint ()
+	void WalkToPlayer()
 	{
-		num = Random.Range (0, wayPoints.Length);
-		Vector3 direction = wayPoints [num].transform.position - gameObject.transform.position;
+		Quaternion direction = Quaternion.LookRotation(player.transform.position - gameObject.transform.position);
+		gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, direction, rSpeed * Time.deltaTime * 5);
+		float dist = Vector3.Distance(gameObject.transform.position, player.transform.position);
+		if (dist > 2 && gameObject.transform.rotation == direction) {
+			gameObject.transform.position += gameObject.transform.forward * speed * 2 * Time.deltaTime;
+		} else if (dist <= 2 && gameObject.transform.rotation == direction) {
+			Time.timeScale = 0;
+		}
+	}
+
+	void RandomWayPoint()
+	{
+		num = Random.Range(0, wayPoints.Length);
+		Vector3 direction = wayPoints[num].transform.position - gameObject.transform.position;
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position + transform.up, direction.normalized, out hit)) {
+		if (Physics.Raycast(transform.position + transform.up, direction.normalized, out hit)) {
 			// ... and if the raycast hits the player...
-			if (!(hit.collider.gameObject == wayPoints [num])) {
-				RandomWayPoint ();
+			if (!(hit.collider.gameObject == wayPoints[num])) {
+				RandomWayPoint();
 			}
 		}
 	}
 
-	public void SetSeen ()
+	public void SetSeen()
 	{
 		go = false;
 	}

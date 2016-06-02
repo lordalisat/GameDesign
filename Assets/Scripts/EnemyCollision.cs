@@ -13,7 +13,6 @@ public class EnemyCollision : MonoBehaviour
 	{
 		// Setting up the references.
 		player = GameObject.FindGameObjectWithTag("Player");
-
 	}
 	
 	// Update is called once per frame

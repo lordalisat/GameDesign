@@ -13,7 +13,6 @@ public class EnemySight : MonoBehaviour
 	// Reference to the sphere collider trigger component.
 	private GameObject player;
 	// Reference to the player.
-	private bool caught = false;
 
 	void Awake()
 	{
@@ -39,12 +38,9 @@ public class EnemySight : MonoBehaviour
 				if (Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, col.radius)) {
 					// ... and if the raycast hits the player...
 					if (hit.collider.gameObject == player) {
-						if (!caught) {
-							caught = true;
-							// ... the player is in sight.
-							sighting.playerSighted();
-							gameObject.GetComponent<EnemyPath>().SetSeen();
-						}
+						// ... the player is in sight.
+						sighting.playerSighted();
+						gameObject.GetComponent<EnemyPath>().SetSeen();
 					}
 				}
 			}
