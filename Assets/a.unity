@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3391e09458b0712499647d7575c5bc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 660306284}
+  enemyCollider: {fileID: 660306284}
   anim: {fileID: 1276618320}
   baseAnim: {fileID: 176378827}
 --- !u!4 &287142008 stripped
@@ -728,9 +728,10 @@ Animation:
   m_GameObject: {fileID: 1276618319}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 478dac73ead05574a88feb106a14b558, type: 2}
+  m_Animation: {fileID: 7400000, guid: 603be193c453573439e582728cdd7658, type: 3}
   m_Animations:
   - {fileID: 7400000, guid: 478dac73ead05574a88feb106a14b558, type: 2}
+  - {fileID: 7400000, guid: 603be193c453573439e582728cdd7658, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
