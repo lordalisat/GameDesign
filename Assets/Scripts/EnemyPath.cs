@@ -13,8 +13,9 @@ public class EnemyPath : MonoBehaviour
 	public float speed = 1;
 	public float rSpeed = 2;
 
-	public bool rand = false;
-	public bool go = true;
+	private bool rand = false;
+	private bool go = true;
+	public bool killed = false;
 
 	// Use this for initialization
 	void Start()
@@ -25,6 +26,9 @@ public class EnemyPath : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (killed)
+			return;
+		
 		float dist = Vector3.Distance(gameObject.transform.position, wayPoints[num].transform.position);
 
 		if (go) {
@@ -87,5 +91,12 @@ public class EnemyPath : MonoBehaviour
 	public void SetSeen()
 	{
 		go = false;
+	}
+
+	public void SetKilled()
+	{
+		killed = true;
+		GetComponent<Animation> ().enabled = false;
+		GetComponent<RagdollHelper> ().Kill ();
 	}
 }

@@ -4,11 +4,11 @@ using System.Collections;
 public class Sighting : MonoBehaviour
 {
 
-	AudioSource audio;
 	public AudioClip Nope;
 	public AudioClip Violin;
 
 	private GameObject player;
+	private AudioSource audioPlayer;
 
 	private bool caught = false;
 
@@ -16,26 +16,26 @@ public class Sighting : MonoBehaviour
 	void Start()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
-		audio = GetComponent<AudioSource>();
+		audioPlayer = GetComponent<AudioSource>();
 	}
 
 	public void playerSighted()
 	{
 		if (!caught) {
 			caught = true;
-			audio.Stop();
-			audio.clip = Nope;
-			audio.PlayOneShot(Nope, 0.5f);
+			audioPlayer.Stop();
+			audioPlayer.clip = Nope;
+			audioPlayer.PlayOneShot(Nope, 0.5f);
 			player.SendMessage("SetMoving");
-			StartCoroutine(Wait(audio.clip.length));
+			StartCoroutine(Wait(audioPlayer.clip.length));
 		}
 	}
 
 	IEnumerator Wait(float f)
 	{
 		yield return new WaitForSeconds(f);
-		audio.clip = Violin;
-		audio.PlayOneShot(Violin, 1f);
+		audioPlayer.clip = Violin;
+		audioPlayer.PlayOneShot(Violin, 1f);
 	}
 	
 	// Update is called once per frame

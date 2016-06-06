@@ -25,6 +25,8 @@ public class EnemySight : MonoBehaviour
 	{
 		// If the player has entered the trigger sphere...
 		if (other.gameObject == player) {
+			if (GetComponent<EnemyPath> ().killed)
+				return;
 
 			// Create a vector from the enemy to the player and store the angle between it and forward.
 			Vector3 direction = other.transform.position - transform.position;
