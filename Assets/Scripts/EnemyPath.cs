@@ -96,7 +96,11 @@ public class EnemyPath : MonoBehaviour
 	public void SetKilled()
 	{
 		killed = true;
+
 		GetComponent<Animation> ().enabled = false;
 		GetComponent<RagdollHelper> ().Kill ();
+
+		// Leave the lantern behind
+		transform.Find ("hips/spine/chest/R_shoulder/R_arm/R_elbow/R_wrist/R_middle1/lantern").transform.parent = null;
 	}
 }

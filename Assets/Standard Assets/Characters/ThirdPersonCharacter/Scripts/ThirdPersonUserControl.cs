@@ -75,9 +75,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Jump = false;
 		}
 
-		public void SetMoving()
+		public void SetMoving(bool to = false)
 		{
-			moving = false;
+			moving = to;
 		}
 	}
 }

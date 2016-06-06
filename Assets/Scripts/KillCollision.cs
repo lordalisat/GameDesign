@@ -34,7 +34,7 @@ public class KillCollision : MonoBehaviour
 
 	public bool CanKill()
 	{
-		return isInside;
+		return isInside && !hunter.GetComponent<EnemyPath>().killed;
 	}
 
 	public GameObject GetTarget()

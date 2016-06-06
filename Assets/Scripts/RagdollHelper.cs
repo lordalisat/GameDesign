@@ -69,9 +69,9 @@ public class RagdollHelper : MonoBehaviour {
 	
 	
 	// Update is called once per frame
-	public void Kill()
+	public void Kill(bool to = false)
 	{
-		setKinematic(false);
+		setKinematic(to);
 	}
 	
 }
