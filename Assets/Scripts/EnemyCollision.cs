@@ -13,7 +13,7 @@ public class EnemyCollision : MonoBehaviour
 	{
 		// Setting up the references.
 		player = GameObject.FindGameObjectWithTag("Player");
-		dragTransform = player.transform.Find ("DragPos");
+		dragTransform = player.transform;
 		box = GetComponent<BoxCollider> ();
 	}
 
@@ -21,9 +21,13 @@ public class EnemyCollision : MonoBehaviour
 	{
 		if (dragging) {
 			if (Input.GetMouseButton (0)) {
-				transform.parent.position = dragTransform.position;
+				transform.parent.position = TranslateDeg(dragTransform);
 			} else {
+				// Save a variable
 				dragging = false;
+
+				// Make the object static again
+				GetComponentInParent<RagdollHelper> ().Kill (true);
 			}
 		} else {
 			if (GetComponentInParent<EnemyPath> ().killed) {
@@ -32,7 +36,11 @@ public class EnemyCollision : MonoBehaviour
 
 				Vector3 diff = player.transform.position - body.position;
 				if (Input.GetMouseButtonDown (0) && diff.magnitude < 2f) {
+					// Set variable
 					dragging = true;
+
+					// Enable ragdoll physics
+					GetComponentInParent<RagdollHelper> ().Kill ();
 				}
 			}
 		}
@@ -47,5 +55,10 @@ public class EnemyCollision : MonoBehaviour
 				GetComponentInParent<EnemyPath> ().SetSeen ();
 			}
 		}
+	}
+
+	private Vector3 TranslateDeg(Transform t)
+	{
+		return dragTransform.position;
 	}
 }

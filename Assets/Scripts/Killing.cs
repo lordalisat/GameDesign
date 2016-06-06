@@ -5,11 +5,11 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Killing : MonoBehaviour
 {
-	public KillCollision enemyCollider;
 	public Animation anim;
 	public Animator baseAnim;
 	public AudioClip killSound;
 
+	private GameObject collidingEnemy;
 	private float animEnd = 0f;
 
 	// Use this for initialization
@@ -29,8 +29,12 @@ public class Killing : MonoBehaviour
 				baseAnim.enabled = true;
 
 				// Only kill the enemy when we're STILL behind him
-				if (enemyCollider.CanKill ()) {
-					enemyCollider.GetTarget ().GetComponent<EnemyPath> ().SetKilled ();
+				if (collidingEnemy != null) {
+					EnemyPath path = collidingEnemy.GetComponent<EnemyPath> ();
+					if (path.killed)
+						return;
+					else
+						path.SetKilled ();
 
 					AudioSource src = GetComponent<AudioSource> ();
 					src.Stop ();
@@ -39,7 +43,10 @@ public class Killing : MonoBehaviour
 				}
 
 				// Check if we're behind the enemy and pressing space
-			} else if (Input.GetKeyDown (KeyCode.Space) && enemyCollider.CanKill ()) {
+			} else if (Input.GetKeyDown (KeyCode.Space) && collidingEnemy != null) {
+				if (collidingEnemy.GetComponent<EnemyPath> ().killed)
+					return;
+
 				GetComponent<ThirdPersonUserControl> ().SetMoving (false);
 				baseAnim.enabled = false;
 
@@ -48,10 +55,17 @@ public class Killing : MonoBehaviour
 
 				animEnd = Time.time + anim.clip.length;
 			}
-		} else if (!baseAnim.enabled) {
-			Transform enemy = enemyCollider.GetTarget ().transform;
+		} else if (!baseAnim.enabled && collidingEnemy != null) {
+			// Get the transform and lock the player on
+			Transform enemy = collidingEnemy.transform;
 			transform.position = enemy.position + enemy.forward * -0.6f;
 			transform.rotation = enemy.rotation;
 		}
+	}
+
+	// Set the colliding object
+	public void SetCollider(GameObject target)
+	{
+		collidingEnemy = target;
 	}
 }

@@ -5,7 +5,6 @@ public class KillCollision : MonoBehaviour
 {
 	private GameObject player;
 	private GameObject hunter;
-	private bool isInside = false;
 
 	// Use this for initialization
 	void Start()
@@ -23,22 +22,12 @@ public class KillCollision : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject == player)
-			isInside = true;
+			player.GetComponent<Killing> ().SetCollider (hunter);
 	}
 
 	void OnTriggerExit(Collider other)
 	{
 		if (other.gameObject == player)
-			isInside = false;
-	}
-
-	public bool CanKill()
-	{
-		return isInside && !hunter.GetComponent<EnemyPath>().killed;
-	}
-
-	public GameObject GetTarget()
-	{
-		return hunter;
+			player.GetComponent<Killing> ().SetCollider (null);
 	}
 }
