@@ -26,7 +26,7 @@ public class Sighting : MonoBehaviour
 			audioPlayer.Stop();
 			audioPlayer.clip = Nope;
 			audioPlayer.PlayOneShot(Nope, 0.5f);
-			player.SendMessage("SetMoving");
+			player.SendMessage("SetMoving", false);
 			StartCoroutine(Wait(audioPlayer.clip.length));
 		}
 	}
